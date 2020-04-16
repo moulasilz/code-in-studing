@@ -12,12 +12,14 @@ void nhap(fraction &ps)
     nhapps:
     cout << "nhap mau so: ";
     cin >> ps.ms; 
-    if(ps.ms==0)
+    if(ps.ms<=0)
       {cout<<"mau so khong hop le, nhap lai:\n";
 	  goto nhapps;}
 }
 int gcd(int a, int b)
 {
+	if(a<0){a*=-1;}
+	if(b<0){b*=-1;}
     if (a == 0 || b == 0)
 	{
         return a + b;
@@ -44,7 +46,7 @@ fraction sum(fraction ps1,fraction ps2)
 fraction sub(fraction ps1,fraction  ps2)
 {
 	fraction kq;
-	kq.ts = ps1.ts*ps2.ms - ps1.ms*ps2.ts;
+	kq.ts = (ps1.ts*ps2.ms) - (ps1.ms*ps2.ts);
 	kq.ms = ps1.ms*ps2.ms;
 	int i=gcd(kq.ts,kq.ms);
 	kq.ts=kq.ts/i;
@@ -74,8 +76,9 @@ fraction div(fraction ps1, fraction ps2)
 }
 void xuat(fraction ps)
 {
-   cout <<" tu so :"<<ps.ts<<endl;
-   cout <<" mau so :"<<ps.ms<<endl;
+   cout <<" "<<ps.ts<<endl;
+   cout <<"---"<<endl;
+   cout <<" "<<ps.ms<<endl;
 }
 int main()
 {
@@ -83,30 +86,36 @@ int main()
     struct fraction ps2;
     cout<<"nhap phan so thu nhat:\n";nhap(ps1);
 	cout<<"nhap phan so thu hai:\n";nhap(ps2);
+
     int choice;
     cout<<"---XU LY PHAN SO---\n";
-    cout<<"1. Cong phan so.\n2. Tru phan so\n3. Nhan phan so\n4. Chia phan so";
-    cout<<"\n-------------------\nNhap lua chon: ";
+    cout<<"1. Cong phan so.\n2. Tru phan so.\n3. Nhan phan so.\n4. Chia phan so.\n Nhap 0 de thoat!";
+    cout<<"\n-------------------";
     inchoice:
+    cout<<"\nNhap lua chon: ";
 	cin>>choice;
     switch(choice)
     {
+    	case 0:
+    	cout<<" Thanks for using! "<<endl;
+    	break;
 		case 1:
 			cout<<"Tong 2 phan so:\n";
-			xuat(sum(ps1,ps2));break;
+			xuat(sum(ps1,ps2));goto inchoice;break;
 		case 2:
 			cout<<"Hieu 2 phan so:\n";
-			xuat(sub(ps1,ps2));break;
+			xuat(sub(ps1,ps2));goto inchoice;break;
 		case 3:
 			cout<<"Tich 2 phan so:\n";
-			xuat(mul(ps1,ps2));break;
+			xuat(mul(ps1,ps2));goto inchoice;break;
 		case 4:
 			cout<<"Thuong 2 phan so:\n";
-			xuat(div(ps1,ps2));break;	
+			xuat(div(ps1,ps2));goto inchoice;break;	
 		default:
 			cout<<"Lua chon khong hop le, vui long nhap lai: ";
 			goto inchoice;	
 			break;	
 	}
+	
     return 0;
 }
